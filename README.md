@@ -10,7 +10,6 @@ User registration and login using JWT
 Book and cancel event bookings
 View all events with search and filters
 CRUD operations for events
-Track available seats in real time
 
 API Base URL
 http://localhost:3000/api/
@@ -40,18 +39,6 @@ Logout feature
 React Hooks used: useState, useEffect, useContext, useMemo, useNavigate.
 
 Database Schema
-Users
-{
-  _id: ObjectId,
-  name: String,
-  email: String,
-  phone: String,
-  password: String,
-  role: "user" | "organizer" | "admin",
-  createdAt: Date,
-  updatedAt: Date
-}
-
 Database Dump
 
 A dump folder named database-dump is included.
@@ -71,4 +58,5 @@ Restore to local MongoDB
 mongoimport --db=event_booking --collection=users --file=database-dump/event_booking/users.json --jsonFormat=relaxed
 mongoimport --db=event_booking --collection=events --file=database-dump/event_booking/events.json --jsonFormat=relaxed
 mongoimport --db=event_booking --collection=registrations --file=database-dump/event_booking/registrations.json --jsonFormat=relaxed
+
 
