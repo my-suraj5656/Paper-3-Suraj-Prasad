@@ -27,8 +27,6 @@ PUT    /api/v1/event/update/:id           - Update event
 DELETE /api/v1/event/delete/:id           - Delete event
 POST   /api/v1/event/register             - Register user for event
 POST   /api/v1/event/cancel/:id           - Cancel event registration
-POST   /api/v1/event/checkin/:id          - Check-in user
-GET    /api/v1/event/attendees/:eventId   - List all attendees
 
 Frontend (React) Features
 
@@ -73,3 +71,4 @@ Restore to local MongoDB
 mongoimport --db=event_booking --collection=users --file=database-dump/event_booking/users.json --jsonFormat=relaxed
 mongoimport --db=event_booking --collection=events --file=database-dump/event_booking/events.json --jsonFormat=relaxed
 mongoimport --db=event_booking --collection=registrations --file=database-dump/event_booking/registrations.json --jsonFormat=relaxed
+
