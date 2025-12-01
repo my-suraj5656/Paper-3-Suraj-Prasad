@@ -46,3 +46,16 @@ View all events (dynamic listing)
 Search events by title / category
 Filter events
 Map through events dynamically to show cards (React .map())
+
+challeges faces
+1. Token authentication issues  
+   - Solved by header validation middleware to verify.
+
+2. Protected routes not working in frontend  
+   - Fixed using React Context API along with custom PrivateRoute and localStorage handling.
+
+3. Dynamic event rendering not updating after delete  
+   - Solved by refreshing event list after delete API call.
+
+4. Search and filter performance  
+   - Improved by using useMemo and optimized filtering logic.
