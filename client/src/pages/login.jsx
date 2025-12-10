@@ -6,6 +6,7 @@ import * as yup from "yup";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/auth";
+import { apiKey } from "../App";
 
 function Login() {
   const { setToken } = useAuthContext();
@@ -33,11 +34,13 @@ function Login() {
   const onSubmit = async (data) => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/user/login",
+        `${apiKey}/api/user/login`,
         data
       );
       const result = res.data;
-      setToken(result.data.token, result.data.id);
+      console.log(result);
+      
+      setToken(result.data.token, result.data.id, result.data.role);
 
       alert(result.message);
       reset();

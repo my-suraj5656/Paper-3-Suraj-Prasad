@@ -50,6 +50,7 @@ const userModule = {
         data: {
           token,
           id: user._id,
+          role: user.role
         },
       });
     } catch (error) {

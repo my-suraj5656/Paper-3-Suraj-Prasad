@@ -1,145 +1,60 @@
-import Event from "../../../database/models/eventModel.js";
-import Registration from "../../../database/models/registrationModel.js";
-import User from "../../../database/models/userModel.js";
-import validatorRules from "../../validatorRule.js";
-import crypto from "crypto";
+import eventModule from "./module.js";
 
 const eventController = {
-  // Create event
+  // Create Event
   async createEvent(req, res) {
-    try {
-      // console.log(true);
+    const data = req.body;
+    const userId = req.user.id;
 
-      const id = req.user.id;
-      //   console.log(id);
+    if (!data.capacity)
+      return res.status(400).json({ message: "capacity is required" });
 
-      const data = req.body;
-      if (!data.capacity)
-        return res.status(400).json({ message: "capacity is required" });
-      if (data.seatsAvailable == null) data.seatsAvailable = data.capacity;
+    if (data.seatsAvailable == null) data.seatsAvailable = data.capacity;
 
-      const updateddata = {
-        ...data,
-        organizer: id,
-      };
-      const event = new Event(updateddata);
-      await event.save();
-      return res.status(201).json({ message: "Event created", data: event });
-    } catch (error) {
-      console.log(error);
+    const finalData = {
+      ...data,
+      organizer: userId,
+    };
 
-      return res
-        .status(500)
-        .json({ message: error.message || "Error creating event" });
-    }
+    return eventModule.createEvent(finalData, res);
   },
 
-  // getallevent
+  // Get all events
   async getAllEvent(req, res) {
-    try {
-      // console.log(true);
-
-      const event = await Event.find();
-      return res.status(200).json({ data: event });
-    } catch (error) {
-      return res.status(500).json({ message: error.message });
-    }
+    return eventModule.getAllEvent(res);
   },
 
-  // editevent
-  async updateEvent(req, res) {
-    try {
-      const { id } = req.params;
-      const updatesdata = req.body;
-      //   console.log(id);
-
-      const event = await Event.findByIdAndUpdate(id, updatesdata, {
-        new: true,
-      });
-      if (!event) return res.status(404).json({ message: "event not found" });
-      return res.status(200).json({ message: "event is updated", data: event });
-    } catch (error) {
-      return res.status(500).json({ message: error.message });
-    }
-  },
-
-  // getsingleevent
+  // geteventbyid
   async getEventById(req, res) {
-    try {
-      const { id } = req.params;
-      const event = await Event.findById(id);
-      if (!event) return res.status(404).json({ message: "Event not found" });
-      return res.status(200).json({ data: event });
-    } catch (error) {
-      return res.status(500).json({ message: error.message });
-    }
+    const { id } = req.params;
+    return eventModule.getEventById(id, res);
+  },
+
+  // updatebyid
+  async updateEvent(req, res) {
+    const { id } = req.params;
+    const updateData = req.body;
+    return eventModule.updateEvent(id, updateData, res);
   },
 
   // deletebyid
   async deleteEvent(req, res) {
-    try {
-      const { id } = req.params;
-      const event = await Event.findByIdAndDelete(id);
-      if (!event) return res.status(404).json({ message: "Event not found" });
-      return res.status(200).json({ message: "Event deleted" });
-    } catch (error) {
-      return res.status(500).json({ message: error.message });
-    }
+    const { id } = req.params;
+    return eventModule.deleteEvent(id, res);
   },
 
-  // Register for an event
+  // Register user for event
   async register(req, res) {
-    try {
-      const userId = req.user.id;
-      const { event, tickets = 1 } = req.body;
-      const myUniqueId = crypto.randomUUID();
-      if (!event || !userId)
-        return res
-          .status(400)
-          .json({ message: "eventId and userId are required" });
-      const reg = await Registration.create({
-        user: userId,
-        event: event,
-        tickets: Number(tickets),
-        uniqueCode: myUniqueId,
-      });
-      return res
-        .status(201)
-        .json({ message: "Registration created", data: reg });
-    } catch (error) {
-      return res.status(500).json({ message: error.message });
-    }
+    const userId = req.user.id;
+    const { event, tickets = 1 } = req.body;
+
+    return eventModule.register(userId, event, tickets, res);
   },
 
-  //cancel
+  // Cancel registration
   async cancelRegistration(req, res) {
-    try {
-      const { id } = req.params;
-      const registration = await Registration.findByIdAndUpdate(
-        id,
-        {
-          $set: { status: "cancelled" },
-        },
-        { new: true }
-      );
-
-      const event = await Event.findByIdAndUpdate(
-        { id: registration.event },
-        {
-          $set: { status: "cancelled" },
-        },
-        { new: true }
-      );
-      if (!registration)
-        return res.status(404).json({ message: "Registration not found" });
-      return res
-        .status(200)
-        .json({ message: "Registration cancelled", data: registration, event });
-    } catch (error) {
-      return res
-        .status(500)
-        .json({ message: error.message || "Error cancelling registration" });
-    }
+    const { id } = req.params;
+    return eventModule.cancelRegistration(id, res);
   },
 };
 

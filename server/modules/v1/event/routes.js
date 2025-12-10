@@ -1,6 +1,6 @@
 import express from "express";
-import eventController from "./controller.js";
 import { headersValidation } from "../../../middleware/allValidator.js";
+import eventController from "./controller.js";
 
 const router = express();
 

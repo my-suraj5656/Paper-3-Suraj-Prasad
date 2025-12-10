@@ -6,6 +6,8 @@ import Event from "./pages/event";
 import { ProtectedRoutes } from "./context/auth";
 import About from "./pages/about";
 
+export const apiKey = `http://localhost:3000`
+
 function App() {
   return (
     <Routes>

@@ -5,6 +5,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { apiKey } from "../App";
 
 function Login() {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ function Login() {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/user/signup",
+        `${apiKey}/api/user/signup`,
         data
       );
       alert(res.data.message);
