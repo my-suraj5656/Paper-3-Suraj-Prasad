@@ -12,7 +12,7 @@ View all events with search and filters
 CRUD operations for events
 
 API Base URL
-http://localhost:3000/api/
+https://paper-3-suraj-prasad.onrender.com
 
 Authentication APIs
 POST /api/v1/user/signup      - Register user
@@ -58,4 +58,5 @@ Restore to local MongoDB
 mongoimport --db=event_booking --collection=users --file=database-dump/event_booking/users.json --jsonFormat=relaxed
 mongoimport --db=event_booking --collection=events --file=database-dump/event_booking/events.json --jsonFormat=relaxed
 mongoimport --db=event_booking --collection=registrations --file=database-dump/event_booking/registrations.json --jsonFormat=relaxed
+
 
