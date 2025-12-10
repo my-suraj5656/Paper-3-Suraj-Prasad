@@ -6,7 +6,7 @@ import Event from "./pages/event";
 import { ProtectedRoutes } from "./context/auth";
 import About from "./pages/about";
 
-export const apiKey = `http://localhost:3000`
+export const apiKey = `https://paper-3-suraj-prasad.onrender.com`
 
 function App() {
   return (
