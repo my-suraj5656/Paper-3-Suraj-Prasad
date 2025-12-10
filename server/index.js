@@ -12,8 +12,6 @@ const PORT = process.env.PORT || 3000;
 app.use(
   cors({
     origin: [
-      "http://localhost:3000",
-      "http://localhost:5173",
       "https://paper-3-suraj-prasad.vercel.app",
     ],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
